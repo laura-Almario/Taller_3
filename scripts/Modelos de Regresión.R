@@ -175,31 +175,30 @@ predicciones_train_lasso <- predict(modelo_lasso, newx = x_train)
 mae_lasso <- mean(abs(predicciones_train_lasso - y_train))
 print(paste("Error (mae) de lasso", mae_lasso))
 
-##GENERA ERROR ##
-# Predicción modelo lasso con base test
+##GENERA ERROR, valor NULL##
 X <-model.matrix(~Nper + Npersug + P5000 + 
                    Total_mujeres + Mujer_jefehogar + num_ocupado + 
                    edad_jefehogar + menores_18 + educ_jefehogar +
                    jefehogar_ocupado + ahorro_jefehogar + afiliadosalud + 
-                   viviendapropia, test_final)
+                   viviendapropia, train_final)
 X <- X[,-1]
-test_final$Ingreso_predicho_hogares<-predict(modelo_lasso,newx = X)
+train_final$Ingreso_predicho_hogares<-predict(modelo_lasso,newx = X)
 
 #Prediccion final Modelo Clasificaci?n
 
-summary(test_final$Ingreso_predicho_final)
-hist(test_final$Ingreso_predicho_final)
+summary(train_final$Ingreso_predicho_hogares)
 
-test_final$Ing_Pred_test_hogares<-factor(ifelse(test_final$Ingreso_predicho_hogares<=test_final$Lp,1,0))
-test_final$Ing_Pred_test_hogares<- factor((test_final$Ing_Pred_test_hogares), 
-                                          levels = c(0, 1), 
-                                          labels = c("No", "Si"))
+train_final$Ing_Pred_test_hogares<-factor(ifelse(train_final$Ingreso_predicho_hogares<=train_final$Lp,1,0))
+train_final$Ing_Pred_test_hogares<- factor((train_final$Ing_Pred_test_hogares), 
+                                              levels = c(0, 1)
+                                             )
 
-##########Archivo de predicciones
-#ESTO NO SE HA HECHO #
+train_final$Ing_Pred_test_hogares
 
+#Archivo de predicciones
 id_test_hogares<-test_hogares$id
 Pobre_Pred_test_hogares<-test_hogares$Pobre_predicho_final
+Pobre_Pred_test_hogares
 Ing_Pred_test_hogares<-test_hogares$Ing_Pred_test_hogares
-DB_test_hog<-data_frame(id_test_hogares,Pobre_Pred_test_hogares,Ing_Pred_test_hogares)
-summary(DB_test_hog)
+test_hog<-data_frame(id_test_hogares,Pobre_Pred_test_hogares,Ing_Pred_test_hogares)
+summary(test_hog)
