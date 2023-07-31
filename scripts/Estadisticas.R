@@ -100,24 +100,14 @@ indigente
 
 #Grafico analisis de la variable mujer
 filtered_data <- train_final[train_final$Mujer_jefehogar == 1, ]
-grafica_mujeres <- ggplot(data = train_final, aes(x = Mujer_jefehogar, fill = "Cantidad de Mujeres")) +
+grafica_mujeres <- ggplot(data = train_final, aes(x = Mujer_jefehogar, fill = "Cantidad de Mujeres Jefe de Hogar")) +
   geom_bar() +
   geom_bar(data = filtered_data, aes(x = jefehogar_ocupado, fill = "Canditad de Mujeres Trabajando")) +
   labs(title = "Analisis de Mujeres vs Mujeres jefes de hogar trabajando",
        x = "Variable",
        y = "Count") +
-  scale_x_discrete(labels = c("Total Mujeres", "Jefehogar Ocupado")) +
   theme_minimal()
 
 grafica_mujeres
 
 
-grafica_mujeres <- ggplot() +
-  geom_bar(data = train_final, aes(x = ifelse(Mujer_jefehogar == 1, "Mujer jefes de hogares", "Otro"), fill = "Cantidad de Mujeres")) +
-  geom_bar(data = filtered_data, aes(x = ifelse(jefehogar_ocupado == 1, "Mujeres jefes de hogares trabajando", "Otro"), fill = "Cantidad de Mujeres Trabajando")) +
-  labs(title = "Analysis of Women Household Heads vs. Working Women Household Heads",
-       x = "Variable",
-       y = "Count") +
-  theme_minimal()
-
-grafica_mujeres
