@@ -179,8 +179,6 @@ xtable(results)
 analisis_modelos <- xtable(results)
 write.xlsx(analisis_modelos, file = "analisis_modelos.xlsx")
 
-# VERIFICAR CUÁL ES EL MEJOR MODELO PARA NOSOTROS Y POR QUÉ
-
 #Evaluación en test
 
 testResults <- data.frame(Pobre = testing$Pobre)
